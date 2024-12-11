@@ -31,7 +31,7 @@ export default async function translate(
   )
 
   if (request.status !== 200) {
-    throw new Error(`OpenAI throwed status ${request.status}`)
+    throw new Error(`OpenAI returned status ${request.status}`)
   }
 
   const response = await request.json()
