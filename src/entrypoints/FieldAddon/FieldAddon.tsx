@@ -274,7 +274,14 @@ export default function FieldAddon({ ctx }: Props) {
     <Canvas ctx={ctx}>
       <Form
         onSubmit={() =>
-          translateField(locales.filter((locale) => locale !== currentLocale))
+          translateField(
+            locales.filter(
+              (locale) =>
+                ![currentLocale, 'en-EU', 'en-uk', 'APAC', 'en-GB'].includes(
+                  locale,
+                ),
+            ),
+          )
         }
       >
         <Button
@@ -284,7 +291,15 @@ export default function FieldAddon({ ctx }: Props) {
           disabled={isTranslating}
         >
           Translate to all locales (
-          {locales.filter((locale) => locale !== currentLocale).join(', ')})
+          {locales
+            .filter(
+              (locale) =>
+                ![currentLocale, 'en-EU', 'en-uk', 'APAC', 'en-GB'].includes(
+                  locale,
+                ),
+            )
+            .join(', ')}
+          )
         </Button>
       </Form>
     </Canvas>
