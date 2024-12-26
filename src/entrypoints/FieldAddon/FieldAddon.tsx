@@ -1,37 +1,37 @@
-import { useEffect, useState } from 'react'
-import get from 'lodash/get'
-import { RenderFieldExtensionCtx } from 'datocms-plugin-sdk'
-import { Canvas, Form, Button, Spinner } from 'datocms-react-ui'
-
-import {
-  getTranslation,
-  getStructuredTextTranslation,
-  getMarkdownTranslation,
-  getRichTextTranslation,
-  getHtmlTranslation,
-  getSeoTranslation,
-  getSlugTranslation,
-} from '../../lib/translation'
-import {
-  getSupportedToLocale,
-  getSupportedFromLocale,
-} from '../../lib/supported-locales'
+import { Button, Canvas, Form, Spinner } from 'datocms-react-ui'
 import {
   Editor,
+  GlobalParameters,
+  OpenAIDefaultValues,
+  Parameters,
   TranslationFormat,
   TranslationOptions,
-  GlobalParameters,
-  Parameters,
   TranslationService,
   TranslationServiceKey,
-  OpenAIDefaultValues,
 } from '../../lib/types'
 import {
   deeplFormalityLevelOptions,
   translationFormats,
   translationServiceOptions,
 } from '../../lib/constants'
+import {
+  getHtmlTranslation,
+  getMarkdownTranslation,
+  getRichTextTranslation,
+  getSeoTranslation,
+  getSlugTranslation,
+  getStructuredTextTranslation,
+  getTranslation,
+} from '../../lib/translation'
+import {
+  getSupportedFromLocale,
+  getSupportedToLocale,
+} from '../../lib/supported-locales'
+import { useEffect, useState } from 'react'
+
+import { RenderFieldExtensionCtx } from 'datocms-plugin-sdk'
 import { fieldHasFieldValue } from '../../lib/helpers'
+import get from 'lodash/get'
 
 type Props = {
   ctx: RenderFieldExtensionCtx
@@ -200,7 +200,10 @@ export default function FieldAddon({ ctx }: Props) {
               break
             }
             default: {
-              translatedField = await getTranslation(translatableField, options)
+              if (excludedKeys.includes(translatableField))
+                translatedField = translatableField
+              else
+                translatedField = await getTranslation(translatableField, options)
               break
             }
           }
