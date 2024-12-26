@@ -19,6 +19,7 @@ import { OpenAIConfigFieldsConfigScreen } from '../../components/OpenAIConfigFie
 import GlossaryIdField from '../../components/GlossaryIdField/GlossaryIdField'
 import FormalityField from '../../components/FormalityField/FormalityField'
 import ExcludedFields from '../../components/ExcludedKeysField/ExcludedKeysField'
+import ExcludedLocales from '../../components/ExcludedLocalesField/ExcludedLocalesField'
 
 type Props = {
   ctx: RenderConfigScreenCtx
@@ -31,6 +32,7 @@ export default function ConfigScreen({ ctx }: Props) {
   const selectedFormalityLevel =
     pluginParameters?.deeplFormalityLevel || deeplFormalityLevelOptions[0]
   const excludedKeys = pluginParameters?.excludedKeys || ''
+  const excludedLocales = pluginParameters?.excludedLocales || ''
 
   const isDeepl =
     selectedTranslationService.value === TranslationService.deepl ||
@@ -170,6 +172,19 @@ export default function ConfigScreen({ ctx }: Props) {
                   ctx.updatePluginParameters({
                     ...pluginParameters,
                     excludedKeys: newValue,
+                  })
+
+                  ctx.notice('Settings updated successfully!')
+                }
+              }}
+            />
+            <ExcludedLocales
+              value={excludedLocales}
+              onBlur={(newValue) => {
+                if (newValue !== excludedLocales) {
+                  ctx.updatePluginParameters({
+                    ...pluginParameters,
+                    excludedLocales: newValue,
                   })
 
                   ctx.notice('Settings updated successfully!')

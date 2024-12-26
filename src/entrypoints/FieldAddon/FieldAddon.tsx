@@ -90,6 +90,8 @@ export default function FieldAddon({ ctx }: Props) {
 
   const excludedKeys =
     pluginParameters.excludedKeys || pluginGlobalParameters.excludedKeys || ''
+  const excludedLocales =
+    pluginParameters.excludedLocales || pluginGlobalParameters.excludedLocales || ''
 
   const fieldValue: any = get(ctx.formValues, ctx.fieldPath)
   const currentLocale: string = ctx.locale
@@ -144,6 +146,7 @@ export default function FieldAddon({ ctx }: Props) {
             topP,
           },
           excludedKeys,
+          excludedLocales,
         }
 
         try {
@@ -273,6 +276,7 @@ export default function FieldAddon({ ctx }: Props) {
     )
   }
 
+  const excludedLocalesArray = excludedLocales.split(',')
   return (
     <Canvas ctx={ctx}>
       <Form
@@ -280,9 +284,7 @@ export default function FieldAddon({ ctx }: Props) {
           translateField(
             locales.filter(
               (locale) =>
-                ![currentLocale, 'en-EU', 'en-uk', 'APAC', 'en-GB'].includes(
-                  locale,
-                ),
+                ![...excludedLocalesArray, currentLocale].includes(locale),
             ),
           )
         }
@@ -297,9 +299,7 @@ export default function FieldAddon({ ctx }: Props) {
           {locales
             .filter(
               (locale) =>
-                ![currentLocale, 'en-EU', 'en-uk', 'APAC', 'en-GB'].includes(
-                  locale,
-                ),
+                ![...excludedLocalesArray, currentLocale].includes(locale),
             )
             .join(', ')}
           )

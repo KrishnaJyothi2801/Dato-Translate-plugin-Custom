@@ -72,6 +72,7 @@ export type Parameters = {
   deeplGlossaryId?: string
   deeplFormalityLevel?: SettingOption<DeeplFormalityLevel>
   excludedKeys?: string
+  excludedLocales?: string
   [TranslationServiceKey.yandexKey]?: string
   [TranslationServiceKey.deeplApiKey]?: string
   [TranslationServiceKey.deeplFreeApiKey]?: string
@@ -106,6 +107,7 @@ export type TranslationOptions = {
     topP: number
   }
   excludedKeys?: string
+  excludedLocales?: string
 }
 
 export type Path = {

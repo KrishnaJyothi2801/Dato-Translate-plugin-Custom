@@ -4,18 +4,16 @@ export default async function translate(
   string: string,
   options: TranslationOptions,
 ): Promise<string> {
-  const targetLocale = ['en-EU', 'en-uk', 'APAC'].includes(options.toLocale)
-    ? 'en-GB'
-    : options.toLocale
+  const excludedLocalesArray = options.excludedLocales?.split(',') || []
 
-  const prompt =
-    targetLocale !== 'en-GB'
-      ? `Translate the following from the locale '${options.fromLocale}' to the locale '${targetLocale}': ${string}`
-      : ''
+  const targetLocale = options.toLocale
+  const prompt = !excludedLocalesArray.includes(targetLocale)
+    ? `Translate the following from the locale '${options.fromLocale}' to the locale '${targetLocale}': ${string}`
+    : ''
 
   let text = ''
 
-  if (targetLocale !== 'en-GB') {
+  if (prompt) {
     const requestOptions = {
       method: 'POST',
       headers: {
