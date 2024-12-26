@@ -1,6 +1,7 @@
+import { TranslationFormat, TranslationService } from './types'
+
 import fetchMock from 'jest-fetch-mock'
 import { getTranslation } from './translation'
-import { TranslationFormat, TranslationService } from './types'
 
 const tranlationOptions = {
   fromLocale: 'nl',
@@ -16,7 +17,7 @@ const tranlationOptions = {
   },
 }
 
-const translatedText = 'Translated test'
+const translatedText = 'Custom Translated test'
 
 describe('getTranslation', () => {
   it('should return translation', async () => {
